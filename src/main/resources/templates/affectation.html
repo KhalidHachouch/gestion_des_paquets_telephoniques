@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<meta charset="utf-8">
+<title>Affectation</title>
+</head>
+<link rel="shortcut icon" th:href="@{/images/cnss.png}">
+<div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a th:href="@{/}" class="navbar-brand"> <img
+				th:src="@{/images/cnss.png}" height="48">
+			</a>
+			<button type="button" class="navbar-toggler"
+				data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarCollapse">
+				<div class="navbar-nav">
+					<a th:href="@{/}" class="nav-item nav-link">Acceuil</a> <a
+						th:href="@{/telephone}" class="nav-item nav-link">Numero Telephone</a>
+					<a th:href="@{/mobile}" class="nav-item nav-link">Type Mobile</a>
+					<a th:href="@{/observation}" class="nav-item nav-link">Observation</a>
+					<a th:href="@{/categorieflotte}" class="nav-item nav-link">Categorie</a>
+					<a th:href="@{/personel}" class="nav-item nav-link">Personnel</a>
+					<a th:href="@{/affectation}" class="nav-item nav-link active">Affectation Numero</a>
+					<a th:href="@{/affectationfile}" class="nav-item nav-link">Fichier D'Affectation </a>
+					<a th:href="@{/personnelfile}" class="nav-item nav-link">Fichier Des Personnel </a>
+					<a th:href="@{/observation_affectation}" class="nav-item nav-link">Observation Affectation</a>
+				</div>
+				<div class="navbar-nav ms-auto">
+					<a class="nav-item nav-link" th:inline="text">[[${#httpServletRequest.remoteUser}]]</a>
+					<a class="nav-item nav-link" th:href="@{/login?logout}"
+						th:inline="text"><img th:src="@{/images/logout.png}"
+						height="30"></a>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>
+<body>
+	<div class="container">
+	<div>
+	<form th:action="@{/affectation}" method="get">
+		<label>Nom de personnel:</label>
+		<input type="text"  name="motCle" th:value="${motCle}"/>
+		<button class="btn btn-primary" type="submit">chercher</button>
+	</form>
+</div>
+		<div>
+			<h3>List Des Affectations</h3>
+		</div>
+		 <div>
+			<div class="col-lg-3">
+				<a th:href="@{/affectation/new}" class="btn btn-primary">Ajouter affectation</a>
+			</div>
+		</div>
+		<div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Nom Personnel</th>
+						<th>Prenom Presonnel</th>
+						<th>Numero Telephone</th>
+						<th>Nom Mobile</th>
+						<th>Categorie Flotte</th>
+						<th>Numero de flotte</th>
+						<th>Date D'affectation</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="affectation:${affectations}">
+						<td th:text="${affectation.idAffectation}"></td>
+						<td th:text="${affectation.personnelAffecter.nom}"></td>
+						<td th:text="${affectation.personnelAffecter.prenom}"></td>
+						<td th:text="${affectation.numeroTelephoneAffecter.numero}"></td>
+						<td th:text="${affectation.mobileAffecter.nomMobile}"></td>
+						<td th:text="${affectation.categorieFlotteAffecter.categorieFlotte}"></td>
+						<td th:text="${affectation.categorieFlotteAffecter.flotteNumero}"></td>
+						<td th:text="${affectation.dateAffecation}"></td>
+						  <td>
+						<a onclick="return confirm ('etes vous sur ??')" th:href="@{/affectation/{id}(id=${affectation.idAffectation})}">
+						<button type="button" class="btn btn-danger">Supprimer <span class="bi bi-trash"></span></button>
+						</a>
+						 <a th:href="@{/affectation/edit/{id}(id=${affectation.idAffectation})}">
+						<button type="button" class="btn btn-success">Modifier<span class="bi bi-trash"></span></button>
+						</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="container">
+			<nav aria-label="Page navigation example" class="navbar navbar toggleable-md navbar-light bg-faded">
+	<ul class="pagination nav nav-pills">
+		<li class="nav-item" th:class="${pageCourante}==${status.index}?'active':''" th:each="pa,status:${pages}" >
+			<a class="page-link" th:href="@{/affectation(page=${status.index},size=${size},motCle=${motCle})}" th:text="${status.index}"></a>
+		</li>
+	</ul>
+	</nav>
+</div>
+		
+		</div>
+</body>
+</html>

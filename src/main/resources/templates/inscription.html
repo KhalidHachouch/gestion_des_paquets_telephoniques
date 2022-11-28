@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+ <link rel="shortcut icon" th:href="@{/images/register.png}">
+<title>Inscription</title>
+<style type="text/css">
+.gradient-custom-3 {
+/* fallback for old browsers */
+background: #84fab0;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5))
+}
+.gradient-custom-4 {
+/* fallback for old browsers */
+background: #84fab0;
+
+/* Chrome 10-25, Safari 5.1-6 */
+background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+
+/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1))
+}
+</style>
+</head>
+<body>
+  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">Cree Un Compte</h2>
+              <th:block th:if="${session.successmessage}">
+              <p  class="alert alert-success">[[${session.successmessage}]]</p>
+              <th:block th:text="${#session.removeAttribute('successmessage')}"></th:block>
+              </th:block> 
+              <th:block th:if="${session.errormessage}">
+              <p  class="alert alert-danger">[[${session.errormessage}]]</p>
+              <th:block th:text="${#session.removeAttribute('errormessage')}"></th:block>
+              </th:block> 
+
+              <form th:action="@{/createUser}" th:object="${user}" method="post">
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" name="username" placeholder="User Name" required="required"/>
+                  <label class="form-label" for="form3Example1cg">User Name</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" name="email" placeholder="Email" required="required"/>
+                  <label class="form-label" for="form3Example3cg">Email</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" name="password" placeholder="Password" required="required"/>
+                  <label class="form-label" for="form3Example4cg">Mot de passe</label>
+                </div>
+                				<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="ADMIN" name="role" id="defaultCheck1" required="required">
+  <label class="form-check-label" for="defaultCheck1">
+    ADMIN
+  </label>
+</div>
+                <div class="d-flex justify-content-center">
+                  <button type="submit"
+                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Inscrire</button>
+                </div>
+
+                <p class="text-center text-muted mt-5 mb-0">vous avez un compte? <a th:href="@{/login}"
+                    class="fw-bold text-body"><u>S'authentifier</u></a></p>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
